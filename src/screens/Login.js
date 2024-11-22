@@ -77,6 +77,15 @@ const Login = ({ navigation }) => {
             Register
           </Text>
         </Text>
+        <Text style={styles.inputText}>
+          Forgot your Password?{" "}
+          <Text
+            style={styles.subInputText}
+            onPress={() => navigation.navigate("Forgot Password")}
+          >
+            Click Here
+          </Text>
+        </Text>
       </View>
     </>
   );

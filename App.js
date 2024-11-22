@@ -32,6 +32,7 @@ import AddCreateGoal from "./src/screens/AddCreateGoal";
 import EditCreateGoal from "./src/screens/EditCreateGoal";
 import Savings from "./src/screens/Savings";
 import AddSaving from "./src/screens/AddSaving";
+import ForgotPassword from "./src/screens/ForgotPassword";
 
 const Stack = createStackNavigator();
 
@@ -202,6 +203,11 @@ function AppNavigator() {
         <Stack.Screen
           name="Add Saving"
           component={AddSaving}
+          options={defaultScreenOptions}
+        />
+        <Stack.Screen
+          name="Forgot Password"
+          component={ForgotPassword}
           options={defaultScreenOptions}
         />
       </Stack.Navigator>

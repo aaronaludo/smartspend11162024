@@ -167,16 +167,24 @@ const Plans = ({ navigation, route }) => {
           <View style={styles.containerContent} key={item.plan.id}>
             <View style={styles.contents}>
               <View style={{ width: "100%" }}>
-                <Text style={{ marginLeft: 5, marginBottom: 10 }}>
+                {/* <Text style={{ marginLeft: 5, marginBottom: 10 }}>
                   <Text style={{ fontWeight: "bold" }}>Count: </Text>
                   {item.count}
-                </Text>
+                </Text> */}
                 <Text style={{ marginLeft: 5, marginBottom: 10 }}>
                   <Text style={{ fontWeight: "bold" }}>Category: </Text>
-                  {item.plan.category}
+                  {item.plan.category === "retirement"
+                  ? "Plans Recommendations - Retirement"
+                  : item.plan.category === "medium_to_long"
+                  ? "Plans Recommendations - Medium to Long Term Goals"
+                  : item.plan.category === "ready_fund"
+                  ? "Plans Recommendations - Ready Fund for Critical Illness (Critical illness Protection)"
+                  : item.plan.category === "estate_conservation"
+                  ? "Plans Recommendations - Estate Conservation"
+                  : "Plans Recommendations"}
                 </Text>
                 <Text style={{ marginLeft: 5, marginBottom: 10 }}>
-                  <Text style={{ fontWeight: "bold" }}>Title: </Text>
+                  <Text style={{ fontWeight: "bold" }}>Plan Name: </Text>
                   {item.plan.title}
                 </Text>
                 <Text style={{ marginLeft: 5, marginBottom: 10 }}>
@@ -200,7 +208,7 @@ const Plans = ({ navigation, route }) => {
                 <Text style={{ marginLeft: 5, marginBottom: 10 }}>
                   <Text style={{ fontWeight: "bold" }}>Total Income: </Text>
                   <Text>
-                    {item.plan.total_income}{" "}
+                    ₱{" "}{item.plan.total_income}{" "}
                     <Text style={{ color: "green", fontWeight: "bold" }}>
                       (Current Total Income: {totalIncome})
                     </Text>
@@ -209,7 +217,7 @@ const Plans = ({ navigation, route }) => {
                 <Text style={{ marginLeft: 5, marginBottom: 10 }}>
                   <Text style={{ fontWeight: "bold" }}>Total Expense: </Text>
                   <Text>
-                    {item.plan.total_expense}{" "}
+                    ₱{" "}{item.plan.total_expense}{" "}
                     <Text style={{ color: "green", fontWeight: "bold" }}>
                       (Current Total Expense: {totalExpense})
                     </Text>

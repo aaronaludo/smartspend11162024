@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import Video from "react-native-video";
 
 const LearningFeatureContent = ({ route }) => {
   const { item } = route.params;
@@ -25,6 +26,14 @@ const LearningFeatureContent = ({ route }) => {
               uri: `${"https://smart-spend.online"}/storage/${item.image}`,
             }}
             style={styles.image}
+            resizeMode="contain"
+          />
+        </View>
+        <View style={[styles.containerImage, { height: '100%' }]}>
+          <Video
+            style={styles.video}
+            source={{ uri: `${"https://smart-spend.online"}/storage/${item.video}` }}  // Assuming item.videoUrl contains the video URL
+            controls={true}
             resizeMode="contain"
           />
         </View>
@@ -128,5 +137,10 @@ const styles = StyleSheet.create({
   },
   description: {
     flexShrink: 1,
+  },
+  video: {
+    width: "100%",
+    height: 300, // Set a fixed height for the video
+    borderRadius: 20, // Apply similar border-radius as the image
   },
 });

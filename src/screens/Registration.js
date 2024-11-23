@@ -16,9 +16,9 @@ const Registration = ({ navigation }) => {
   const [date, setDate] = useState(new Date());
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState("+639");
   const [address, setAddress] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [gender, setGender] = useState(""); // New state for gender
   const [age, setAge] = useState("");
   const [work, setWork] = useState("");
   const [salary, setSalary] = useState("");
@@ -30,7 +30,6 @@ const Registration = ({ navigation }) => {
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
-    console.log(currentDate);
     setDate(currentDate);
   };
 
@@ -62,23 +61,29 @@ const Registration = ({ navigation }) => {
     }
   };
 
+  const capitalizeName = (name) => {
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
+
   const handleRegister = async () => {
     setError("");
     try {
       const response = await axios.post(
         `${"https://smart-spend.online"}/api/users/register`,
         {
-          first_name: firstName,
-          last_name: lastName,
+          first_name: capitalizeName(firstName),
+          last_name: capitalizeName(lastName),
           phone: phone,
           address: address,
-          phone: phone,
-          // date_of_birth: dateOfBirth,
           date_of_birth: date.toLocaleDateString("en-US", {
             month: "2-digit",
             day: "2-digit",
             year: "numeric",
           }),
+          gender: gender,
           age: age,
           work: work,
           email: email,
@@ -90,9 +95,6 @@ const Registration = ({ navigation }) => {
 
       const { token, user } = response.data.response;
 
-      // await AsyncStorage.setItem("userToken", token);
-      // await AsyncStorage.setItem("userData", JSON.stringify(user));
-
       navigation.navigate("OTP", {
         user: user,
       });
@@ -103,7 +105,7 @@ const Registration = ({ navigation }) => {
 
   return (
     <ScrollView>
-      <View style={[styles.container, { flex: 1, marginBottom: 30 }]}>
+      <View style={[styles.container, { flex: 1, marginBottom: 30, justifyContent: 'flex-start'}]}>
         <Text style={styles.title}>Hello!</Text>
         <Text style={styles.description}>Create a new account.</Text>
         {error !== "" && (
@@ -113,10 +115,10 @@ const Registration = ({ navigation }) => {
           style={styles.input}
           placeholder="First name"
           value={firstName}
-          // onChangeText={(text) => setFirstName(text)}
           onChangeText={(text) => {
-            // Allow only letters
-            const nameValue = text.replace(/[^A-Za-z\s]/g, "");
+            const nameValue = text
+              .replace(/[^A-Za-z\s]/g, "")
+              .replace(/\b\w/g, (char) => char.toUpperCase());
             setFirstName(nameValue);
           }}
         />
@@ -124,32 +126,19 @@ const Registration = ({ navigation }) => {
           style={styles.input}
           placeholder="Last name"
           value={lastName}
-          // onChangeText={(text) => setLastName(text)}
           onChangeText={(text) => {
-            // Allow only letters
-            const nameValue = text.replace(/[^A-Za-z\s]/g, "");
+            const nameValue = text
+              .replace(/[^A-Za-z\s]/g, "")
+              .replace(/\b\w/g, (char) => char.toUpperCase());
             setLastName(nameValue);
           }}
         />
-        {/* <TextInput
-          style={styles.input}
-          placeholder="Phone"
-          value={phone}
-          // onChangeText={(text) => setPhone(text)}
-          onChangeText={(text) => {
-            // Allow only numbers
-            const incomeValue = text.replace(/[^0-9]/g, "");
-            setPhone(incomeValue);
-          }}
-          keyboardType="numeric"
-        /> */}
         <TextInput
           style={styles.input}
           placeholder="Phone"
           value={phone}
           onChangeText={(text) => {
-            // Allow only numbers and limit to 11 characters
-            const incomeValue = text.replace(/[^0-9]/g, "").slice(0, 11);
+            const incomeValue = text.replace(/[^0-9+]/g, "").slice(0, 13);
             setPhone(incomeValue);
           }}
           keyboardType="numeric"
@@ -160,17 +149,11 @@ const Registration = ({ navigation }) => {
           value={address}
           onChangeText={(text) => setAddress(text)}
         />
-        {/* <TextInput
-          style={styles.input}
-          placeholder="Date of birth"
-          value={dateOfBirth}
-          onChangeText={(text) => setDateOfBirth(text)}
-        /> */}
         <TouchableOpacity
           style={[styles.inputButton, { marginBottom: 10 }]}
           onPress={showDatepicker}
         >
-          <Text style={styles.inputButtonText}>Date Picker</Text>
+          <Text style={styles.inputButtonText}>Birthdate</Text>
         </TouchableOpacity>
         <TextInput
           style={styles.input}
@@ -179,26 +162,33 @@ const Registration = ({ navigation }) => {
             day: "2-digit",
             year: "numeric",
           })}
+          editable={false}
         />
-        {/* <TextInput
-          style={styles.input}
-          placeholder="Age"
-          value={age}
-          // onChangeText={(text) => setAge(text)}
-          onChangeText={(text) => {
-            // Allow only numbers
-            const incomeValue = text.replace(/[^0-9]/g, "");
-            setAge(incomeValue);
-          }}
-          keyboardType="numeric"
-        /> */}
+        <View style={{ flexDirection: "row", width: '100%' }}>
+          {["Male", "Female", "Rather not say"].map((option) => (
+            <TouchableOpacity
+              key={option}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "start",
+                marginVertical: 5,
+              }}
+              onPress={() => setGender(option)}
+            >
+              <CheckBox
+                checked={gender === option}
+                onPress={() => setGender(option)}
+              />
+              <Text>{option}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
         <TextInput
           style={styles.input}
           placeholder="Work"
           value={work}
-          // onChangeText={(text) => setWork(text)}
           onChangeText={(text) => {
-            // Allow only letters
             const nameValue = text.replace(/[^A-Za-z\s]/g, "");
             setWork(nameValue);
           }}
@@ -207,9 +197,7 @@ const Registration = ({ navigation }) => {
           style={styles.input}
           placeholder="Salary"
           value={salary}
-          // onChangeText={(text) => setSalary(text)}
           onChangeText={(text) => {
-            // Allow only numbers
             const incomeValue = text.replace(/[^0-9]/g, "");
             setSalary(incomeValue);
           }}

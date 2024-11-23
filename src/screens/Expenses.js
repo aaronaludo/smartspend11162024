@@ -76,6 +76,16 @@ const Expenses = ({ navigation, route }) => {
             }
           />
         </View>
+        <View style={{
+          flexDirection: "row",
+          justifyContent: "end",
+          alignItems: "center",
+          marginBottom: 20,
+        }}>
+          <Ionicons name="open" size={40} color="#41DC40" onPress={() =>
+              navigation.navigate("Expense Category")
+            }/>
+        </View>
         <View style={styles.containerSearch}>
           <TextInput placeholder="Search" style={styles.input} />
         </View>

@@ -57,6 +57,11 @@ const Overview = ({ navigation }) => {
         color: (opacity = 1) => `red`,
         strokeWidth: 2,
       },
+      {
+        data: graphData.map((item) => item.total_saving),
+        color: (opacity = 1) => `blue`,
+        strokeWidth: 2,
+      },
     ],
   };
 

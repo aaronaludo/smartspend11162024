@@ -33,6 +33,9 @@ import EditCreateGoal from "./src/screens/EditCreateGoal";
 import Savings from "./src/screens/Savings";
 import AddSaving from "./src/screens/AddSaving";
 import ForgotPassword from "./src/screens/ForgotPassword";
+import ForgotPasswordVerification from "./src/screens/ForgotPasswordVerification";
+import ForgotPasswordReset from "./src/screens/ForgotPasswordReset";
+import ExpenseCategory from "./src/screens/ExpenseCategory";
 
 const Stack = createStackNavigator();
 
@@ -208,6 +211,21 @@ function AppNavigator() {
         <Stack.Screen
           name="Forgot Password"
           component={ForgotPassword}
+          options={defaultScreenOptions}
+        />
+        <Stack.Screen
+          name="Forgot Password Verification"
+          component={ForgotPasswordVerification}
+          options={defaultScreenOptions}
+        />
+        <Stack.Screen
+          name="Forgot Password Reset"
+          component={ForgotPasswordReset}
+          options={defaultScreenOptions}
+        />
+        <Stack.Screen
+          name="Expense Category"
+          component={ExpenseCategory}
           options={defaultScreenOptions}
         />
       </Stack.Navigator>

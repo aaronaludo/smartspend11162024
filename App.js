@@ -32,6 +32,7 @@ import AddCreateGoal from "./src/screens/AddCreateGoal";
 import EditCreateGoal from "./src/screens/EditCreateGoal";
 import Savings from "./src/screens/Savings";
 import AddSaving from "./src/screens/AddSaving";
+import EditSaving from "./src/screens/EditSaving";
 import ForgotPassword from "./src/screens/ForgotPassword";
 import ForgotPasswordVerification from "./src/screens/ForgotPasswordVerification";
 import ForgotPasswordReset from "./src/screens/ForgotPasswordReset";
@@ -206,6 +207,11 @@ function AppNavigator() {
         <Stack.Screen
           name="Add Saving"
           component={AddSaving}
+          options={defaultScreenOptions}
+        />
+        <Stack.Screen
+          name="Edit Saving"
+          component={EditSaving}
           options={defaultScreenOptions}
         />
         <Stack.Screen
